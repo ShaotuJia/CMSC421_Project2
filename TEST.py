@@ -10,9 +10,11 @@ class Element:
         self.child = None
 
 
-fx = '["+", ["*", ["+", "x", 2], ["+", "x", 1]], 3]'
+fx = '["+", ["*", ["+", ["*", "x", 4], 2], ["+", "x", 1]], 3]'
 
-fx = json.dumps(fx)
+#print("the ")
+
+#fx = json.dumps(fx)
 
 
 # return the index of '[' and ']'
@@ -25,6 +27,7 @@ def where_bracket(aList, Number):
     left_counter = 0
     right_counter = 0
     index = []
+
     for left_index in range(0, len(aList)-1):
         if aList[left_index] == '[':
             left_counter += 1
@@ -32,20 +35,53 @@ def where_bracket(aList, Number):
             index.append(left_index)
             break
 
-    for right_index in range(len(aList)-1, 0):
+
+    for right_index in range(len(aList)-1, 0, -1):
         if aList[right_index] == ']':
             right_counter += 1
         if right_counter == Number:
             index.append(right_index)
             break
+    for mid_index in range(left_index+1, right_index, 1):
+        if aList[mid_index] == '[':
+            break
+        if aList[mid_index] == ']':
+            index[1] = mid_index
 
     return index
 
-index = where_bracket(fx, 1)
+index = where_bracket(fx, 2)
 print('the location of bracket', index)
+print('left= ', fx[index[0]])
+print('right=',fx[index[1]])
+
+
+#subtree = fx[index[0]:index[1]+1]
 
 
 
+#subtree = json.loads(subtree)
+
+
+def separate(tree, left_index):
+    truth = False
+    subtree = tree[left_index]
+    left_index = left_index + 1
+    while truth is False:
+        element= tree[left_index]
+        subtree = subtree + element
+        try:
+            json.loads(subtree)
+            truth = True
+        except:
+            left_index += 1
+
+    return subtree
+
+subtree = separate(fx, index[0])
+
+print('the type of subtree', type(subtree))
+print('the subtree is ', subtree)
 
 
 
