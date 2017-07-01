@@ -48,6 +48,11 @@ for level in range(2, tree_height):
         tree = [binary_operator(), tree,tree]
 
 
+#tree is a random generated function
+print("the random tree is ", tree)
+print("the type of tree is", type(tree))
+
+
 # This function is to find the index of left bracket. Number = 3 mean the third left bracket
 def left_bracket(aList, Number):
 
@@ -79,6 +84,25 @@ def select_subtree(tree, left_index):
 
     return subtree
 
-left_index = left_bracket(fx,3)
-subtree = select_subtree(fx, left_index)
-print(subtree)
+tree = json.dumps(tree)
+left_index = left_bracket(tree,2)
+subtree = select_subtree(tree, left_index)
+print("the seperated subtree is ", subtree)
+print("the type of subtree is ", type(subtree))
+
+
+#This function is to replace a part of original tree by new random tree
+def mutate (original_tree:str, random_tree:str):
+    total_level = original_tree.count("[")
+    subtree_level = random.randint(2,total_level)
+    bracket_left = left_bracket(original_tree, subtree_level)
+
+    replace_subtree = select_subtree(original_tree, bracket_left)
+    new_tree = original_tree.replace(replace_subtree,random_tree)
+    return new_tree
+
+new_tree = mutate(fx, tree)
+
+print("the new tree is", new_tree)
+
+

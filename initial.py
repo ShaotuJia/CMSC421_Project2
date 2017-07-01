@@ -35,7 +35,7 @@ def rand_element():
         return real_rand()
 
 
-tree_height = 5
+tree_height = 3
 tree = []
 tree = binary_operator()
 tree = [binary_operator(), 'x', real_rand()]
@@ -48,6 +48,22 @@ for level in range(2, tree_height):
         tree = [binary_operator(), rand_element(), tree]
     else:
         tree = [binary_operator(), tree,tree]
+
+# Directly convert list to string cannot be used in json.loads !!!
+
+def convert_string(list):
+    string = str(list)
+    j_string = ""
+    for x in string:
+        if x == "\\":
+            continue
+        else:
+            j_string = j_string + x
+    return j_string
+
+
+
+tree = json.dumps(tree)
 
 print(tree)
 

@@ -1,0 +1,15 @@
+This Memo is to record the experience during programming when made mistakes
+
+1. Difference between json.dumps and json.loads
+
+'json.dumps' is to convert 'List' to JOSN expersion
+
+'json.loads' is to convert 'string' to JSON experssion
+
+!!!!! Do not convert a List to string, and then use json.loads !!!!!!
+!!!!! Do not use string for json.dumps !!!!!
+
+In above two cases, there will be fail because the convertion generate many unknown "\\". 
+These "\\" will cause failure when convert to JSON experssion
+
+ 
