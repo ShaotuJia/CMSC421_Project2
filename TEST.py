@@ -1,90 +1,93 @@
+# This is to test possible functions
+
 import json
 import random
-f = json.dumps(["+", ["*", 2, ["+", "x", 1]], 3])
 
-fx = '["+", "x", 1]'
+class Element:
+    def __init__(self):
+        self.e = None
+        self.parent = None
+        self.child = None
 
-print("fx = ", type(fx))
 
+fx = '["+", ["*", ["+", "x", 2], ["+", "x", 1]], 3]'
+
+fx = json.dumps(fx)
+
+
+# return the index of '[' and ']'
+def where_bracket(aList, Number):
+
+    if Number >= aList.count('['):
+        print('Beyond the range of [')
+        return 1
+
+    left_counter = 0
+    right_counter = 0
+    index = []
+    for left_index in range(0, len(aList)-1):
+        if aList[left_index] == '[':
+            left_counter += 1
+        if left_counter == Number:
+            index.append(left_index)
+            break
+
+    for right_index in range(len(aList)-1, 0):
+        if aList[right_index] == ']':
+            right_counter += 1
+        if right_counter == Number:
+            index.append(right_index)
+            break
+
+    return index
+
+index = where_bracket(fx, 1)
+print('the location of bracket', index)
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''''''''''
 fx = json.loads(fx)
 
+openSet = []
+closeSet = []
 
-# randomly generate binary operator
-def binary_operator() -> object:
-    b_list = ["+", "-", "*"]
-    b_index = random.randint(0,2)
-    return b_list[b_index]
+openSet = openSet + fx
 
-
-# Randomly generate unary operator
-def unary_operator():
-    u_list = ["e", "sin", "cos"]
-    u_index = random.randint(0,2)
-    return u_list[u_index]
-
-
-def real_rand():
-    return random.uniform(-100, 100)
-
-
-def rand_element():
-    index = random.randint(0,1)
-    if index == 0:
-        return [binary_operator(), 'x', real_rand()]
-    else:
-        return real_rand()
-
-
-tree_height = 5
-tree = []
-tree = binary_operator()
-tree = [binary_operator(), 'x', real_rand()]
-
-for level in range(2, tree_height):
-    lucky_index = random.randint(0,2)
-    if lucky_index == 0:
-        tree = [binary_operator(), tree, rand_element()]
-    elif lucky_index == 1:
-        tree = [binary_operator(), rand_element(), tree]
-    else:
-        tree = [binary_operator(), tree,tree]
-
-print(tree)
+while not (not openSet):
+    for x in openSet:
 
 
 
-'''
-def convert_dic(f_x):
-    for i in range(0, len(f_x) - 1):
-        if f_x[i] == "[":
-            f_x[i] = "{"
 
-        if f_x[i] == "]":
-            f_x[i] = "]}"
+first_tree = []
+second_tree = []
+third_tree = []
+fx_copy = [first_tree, second_tree, third_tree]
+first_tree = fx[0]
+second_tree = fx[1]
+third_tree = fx[2]
 
-        if f_x[i] == "+" or "-" or "*":
-            f_x[i] = ":["
+second_tree = fx[1][2]
 
-    return f_x
+#This functions is to find how many levels in the tree
+def levels(tree):
+    for i in range(1,2):
+        for j in range(0,2):
+            tree[i] += tree[i][j]
 
 
-fx = convert_dic(fx)
+def select_subtree(tree, level):
+    for
 
-print(fx)
-
-'''
-'''
-dict_ = {1: 2, 3: 4, "55": "66"}
-
-# test json.dumps
-
-print (type(dict_), dict_)
-json_str = json.dumps(dict_)
-print ("json.dumps(dict) return:")
-print (type(json_str), json_str)
-
-# test json.loads
-print("\njson.loads(str) return")
-dict_2 = json.loads(json_str)
-print(type(dict_2), dict_2)
 '''
