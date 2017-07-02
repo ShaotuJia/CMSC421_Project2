@@ -4,8 +4,15 @@
 
 import json
 import math
+import sys
 
-fx = '["+", ["*","x", 2],3]'
+file = sys.argv[1]
+
+try:
+    json.loads(sys.argv[2])
+    fx = sys.argv[2]
+except:
+    print("The format of Equation Expression is Wrong !!")
 
 
 # This function is to find the index of left bracket. Number = 3 mean the third left bracket
@@ -80,12 +87,6 @@ def equation_value(eq:str, x:int):      # Find the value of equation
     return float(eq)
 
 
-data = []
-
-with open('data/enzyme.json') as data_file:
-    data = json.load(data_file)
-
-
 def sum_error(data:list, function:str):
     error_list = []
     for i in range(0,len(data)):
@@ -95,9 +96,13 @@ def sum_error(data:list, function:str):
 
     return sum(error_list)
 
-print("fx = ", fx)
+data = []
 
-print("sum_error = ", sum_error(data, fx))
+with open(file) as data_file:
+    data = json.load(data_file)
+
+
+print(sum_error(data, fx))
 
 
 

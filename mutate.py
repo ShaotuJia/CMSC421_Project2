@@ -6,9 +6,12 @@
 
 import json
 import random
+import sys
 
-
-fx = '["+", ["*", ["+", ["*", "x", 4], 2], ["+", "x", 1]], 3]'
+try:
+    fx = sys.argv[1]
+except:
+    print("The format of Equation Expression is Wrong !!")
 
 
 # randomly generate binary operator
@@ -92,7 +95,7 @@ def select_subtree(tree, left_index):
     return subtree
 
 
-#This function is to replace a part of original tree by new random tree
+# This function is to replace a part of original tree by new random tree
 def mutate (original_tree:str, random_tree:str):
 
     lucky_number = random.randint(0, 1)
@@ -112,4 +115,4 @@ def mutate (original_tree:str, random_tree:str):
 
 new_tree = mutate(fx, initial())
 
-print("the new tree is", new_tree)
+print(new_tree)

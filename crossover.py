@@ -4,12 +4,14 @@
 
 import json
 import random
+import sys
 
+try:
+    arg_1 = sys.argv[1]
+    arg_2 = sys.argv[2]
+except:
+    print("The format of Equation Expression is Wrong !!")
 
-arg_1 = '["+", ["*", ["+", ["*", "x", 4], 2], ["+", "x", 1]], 8]'
-
-arg_2 = '["+", ["*", ["+", ["*", "x", 4], ["-", ["-", ["sin", "x"], -80.46], ["-", ["e", "x"], -80.46]]], ["+", "x", ' \
-        '1]], 3] '
 
 # This function is to find the index of left bracket. Number = 3 mean the third left bracket
 def left_bracket(aList, Number):
@@ -43,6 +45,7 @@ def select_subtree(tree, left_index):
 
     return subtree
 
+
 def crossover(arg_first:str, arg_second:str):
 
     lucky_No_1 = random.randint(1, arg_first.count("["))
@@ -61,7 +64,7 @@ def crossover(arg_first:str, arg_second:str):
     new_second = json.loads(new_second)
 
     print("The first expression changed to =", new_first)
-    print("The second expression chaged to =", new_second)
+    print("The second expression changed to =", new_second)
 
 
 crossover(arg_1,arg_2)
