@@ -45,7 +45,7 @@ tree_height = 3
 tree = []
 tree = binary_operator()
 tree = [binary_operator(), variable_rand(), real_rand()]
-#tree = [binary_operator(), 'x', real_rand()]
+
 
 for level in range(2, tree_height):
     lucky_index = random.randint(0,2)
@@ -73,41 +73,3 @@ def convert_string(list):
 tree = json.dumps(tree)
 
 print(tree)
-
-
-
-'''
-def convert_dic(f_x):
-    for i in range(0, len(f_x) - 1):
-        if f_x[i] == "[":
-            f_x[i] = "{"
-
-        if f_x[i] == "]":
-            f_x[i] = "]}"
-
-        if f_x[i] == "+" or "-" or "*":
-            f_x[i] = ":["
-
-    return f_x
-
-
-fx = convert_dic(fx)
-
-print(fx)
-
-'''
-'''
-dict_ = {1: 2, 3: 4, "55": "66"}
-
-# test json.dumps
-
-print (type(dict_), dict_)
-json_str = json.dumps(dict_)
-print ("json.dumps(dict) return:")
-print (type(json_str), json_str)
-
-# test json.loads
-print("\njson.loads(str) return")
-dict_2 = json.loads(json_str)
-print(type(dict_2), dict_2)
-'''

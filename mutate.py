@@ -14,9 +14,11 @@ def binary_operator() -> object:
     b_index = random.randint(0,2)
     return b_list[b_index]
 
+
 def variable_rand():
     rand_index = random.randint(0,3)
     return {0:["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
+
 
 def real_rand():
     return float("{0:.2f}".format(random.uniform(-1000, 1000)))
@@ -62,7 +64,7 @@ print("the type of tree is", type(tree))
 # This function is to find the index of left bracket. Number = 3 mean the third left bracket
 def left_bracket(aList, Number):
 
-    if Number >= aList.count('['):
+    if Number > aList.count('['):
         print('Beyond the range of [')
         return 1
 
@@ -92,7 +94,8 @@ def select_subtree(tree, left_index):
     return subtree
 
 tree = json.dumps(tree)
-left_index = left_bracket(tree,2)
+which_bracket = random.randint(1, tree.count("["))
+left_index = left_bracket(tree,which_bracket)
 subtree = select_subtree(tree, left_index)
 print("the seperated subtree is ", subtree)
 print("the type of subtree is ", type(subtree))
