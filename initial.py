@@ -23,14 +23,20 @@ def unary_operator():
     return u_list[u_index]
 
 
+def variable_rand():
+    rand_index = random.randint(0,3)
+    return {0:["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
+
+
 def real_rand():
-    return random.uniform(-100, 100)
+    return float("{0:.2f}".format(random.uniform(-1000, 1000)))
 
 
 def rand_element():
     index = random.randint(0,1)
     if index == 0:
-        return [binary_operator(), 'x', real_rand()]
+        #return [binary_operator(), 'x', real_rand()]
+        return [binary_operator(), variable_rand(), real_rand()]
     else:
         return real_rand()
 
@@ -38,7 +44,8 @@ def rand_element():
 tree_height = 3
 tree = []
 tree = binary_operator()
-tree = [binary_operator(), 'x', real_rand()]
+tree = [binary_operator(), variable_rand(), real_rand()]
+#tree = [binary_operator(), 'x', real_rand()]
 
 for level in range(2, tree_height):
     lucky_index = random.randint(0,2)

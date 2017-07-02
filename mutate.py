@@ -14,29 +14,35 @@ def binary_operator() -> object:
     b_index = random.randint(0,2)
     return b_list[b_index]
 
-
-# Randomly generate unary operator
-def unary_operator():
-    u_list = ["e", "sin", "cos"]
-    u_index = random.randint(0,2)
-    return u_list[u_index]
-
+def variable_rand():
+    rand_index = random.randint(0,3)
+    return {0:["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
 
 def real_rand():
-    return random.uniform(-100, 100)
+    return float("{0:.2f}".format(random.uniform(-1000, 1000)))
 
 
 def rand_element():
     index = random.randint(0,1)
     if index == 0:
-        return [binary_operator(), 'x', real_rand()]
+        return [binary_operator(), variable_rand(), real_rand()]
     else:
         return real_rand()
+
+
+def digit_index(string:str):
+    index = []
+    for x in range(0,len(string)-1):
+        if string[x].isdigit():
+            index.append(x)
+
+    return index
+
 
 tree_height = random.randint(2,5)
 tree = []
 tree = binary_operator()
-tree = [binary_operator(), 'x', real_rand()]
+tree = [binary_operator(), variable_rand(), real_rand()]
 
 for level in range(2, tree_height):
     lucky_index = random.randint(0,2)
@@ -70,6 +76,7 @@ def left_bracket(aList, Number):
 
 
 def select_subtree(tree, left_index):
+
     truth = False
     subtree = tree[left_index]
     left_index = left_index + 1
@@ -93,16 +100,22 @@ print("the type of subtree is ", type(subtree))
 
 #This function is to replace a part of original tree by new random tree
 def mutate (original_tree:str, random_tree:str):
-    total_level = original_tree.count("[")
-    subtree_level = random.randint(2,total_level)
-    bracket_left = left_bracket(original_tree, subtree_level)
 
-    replace_subtree = select_subtree(original_tree, bracket_left)
-    new_tree = original_tree.replace(replace_subtree,random_tree)
+    lucky_number = random.randint(0, 1)
+
+    if lucky_number == 0:
+        digit_index_list = digit_index(original_tree)
+        replace_digit_index = random.choice(digit_index_list)
+        new_tree = original_tree.replace(original_tree[replace_digit_index],random_tree)
+    else:
+        total_level = original_tree.count("[")
+        subtree_level = random.randint(2, total_level)
+        bracket_left = left_bracket(original_tree, subtree_level)
+
+        replace_subtree = select_subtree(original_tree, bracket_left)
+        new_tree = original_tree.replace(replace_subtree,random_tree)
     return new_tree
 
 new_tree = mutate(fx, tree)
 
 print("the new tree is", new_tree)
-
-
