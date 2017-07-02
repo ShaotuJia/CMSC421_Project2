@@ -12,4 +12,8 @@ This Memo is to record the experience during programming when made mistakes
 In above two cases, there will be fail because the convertion generate many unknown "\\". 
 These "\\" will cause failure when convert to JSON experssion
 
- 
+2. Trick in Pycharm Debugger
+warning: Debugger speedups using cython not found. Run '"/usr/bin/python3.4" "/home/shaotu/pycharm-community-2017.1.4/helpers/pydev/setup_cython.py" build_ext --inplace' to build.
+pydev debugger: process 15846 is connecting
+
+reason: debug in the function which is not called  

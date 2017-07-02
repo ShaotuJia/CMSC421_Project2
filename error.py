@@ -76,16 +76,30 @@ def equation_value(eq:str, x:int):      # Find the value of equation
             result = str(binary_operation(unit,x))
         eq = eq.replace(unit, result)
 
-    return eq
-
-print("fx = ", fx)
-print("equation value = ", equation_value(fx, 7))
-
+    return float(eq)
 
 
 data = []
 
-with open('data/oscillator.json') as data_file:
+with open('data/enzyme.json') as data_file:
     data = json.load(data_file)
+
+
+def sum_error(data:list, function:str):
+    error_list = []
+    for i in range(0,len(data)):
+        eq_result = equation_value(function, i)
+        error = data[i] - eq_result
+        error_list.append(math.pow(error, 2))
+
+    return sum(error_list)
+
+print("fx = ", fx)
+
+print("sum_error = ", sum_error(data, fx))
+
+
+
+
 
 
