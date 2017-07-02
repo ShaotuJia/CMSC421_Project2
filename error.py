@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
+
 # This script is to calculate the sum of squared error for a given JOSN-expression and data file
 
 import json
 import math
-import matplotlib.pyplot as plt
 
 fx = '["+", ["*","x", 2],3]'
 

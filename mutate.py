@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 # This script is to replace some subtree of the JSON-expression with a new, random subtree.
 # Like with initial, repeatedly running mutate should produce varying random 'mutations'
 
@@ -41,24 +44,19 @@ def digit_index(string:str):
     return index
 
 
-tree_height = random.randint(2,5)
-tree = []
-tree = binary_operator()
-tree = [binary_operator(), variable_rand(), real_rand()]
+def initial():
+    tree_height = random.randint(2,5)
+    tree = [binary_operator(), variable_rand(), real_rand()]
 
-for level in range(2, tree_height):
-    lucky_index = random.randint(0,2)
-    if lucky_index == 0:
-        tree = [binary_operator(), tree, rand_element()]
-    elif lucky_index == 1:
-        tree = [binary_operator(), rand_element(), tree]
-    else:
-        tree = [binary_operator(), tree,tree]
-
-
-#tree is a random generated function
-print("the random tree is ", tree)
-print("the type of tree is", type(tree))
+    for level in range(2, tree_height):
+        lucky_index = random.randint(0,2)
+        if lucky_index == 0:
+            tree = [binary_operator(), tree, rand_element()]
+        elif lucky_index == 1:
+            tree = [binary_operator(), rand_element(), tree]
+        else:
+            tree = [binary_operator(), tree,tree]
+    return json.dumps(tree)
 
 
 # This function is to find the index of left bracket. Number = 3 mean the third left bracket
@@ -93,13 +91,6 @@ def select_subtree(tree, left_index):
 
     return subtree
 
-tree = json.dumps(tree)
-which_bracket = random.randint(1, tree.count("["))
-left_index = left_bracket(tree,which_bracket)
-subtree = select_subtree(tree, left_index)
-print("the seperated subtree is ", subtree)
-print("the type of subtree is ", type(subtree))
-
 
 #This function is to replace a part of original tree by new random tree
 def mutate (original_tree:str, random_tree:str):
@@ -119,6 +110,6 @@ def mutate (original_tree:str, random_tree:str):
         new_tree = original_tree.replace(replace_subtree,random_tree)
     return new_tree
 
-new_tree = mutate(fx, tree)
+new_tree = mutate(fx, initial())
 
 print("the new tree is", new_tree)
