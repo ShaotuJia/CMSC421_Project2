@@ -15,6 +15,11 @@
 import json
 import random
 import math
+import time
+import sys
+
+random.seed(time.time())  # the random seed is the current system time
+file = sys.argv[1]        # Get the location of data file using command
 
 
 # randomly generate binary operator
@@ -48,9 +53,17 @@ def rand_element():
         return real_rand()
 
 
+# This function is to generate random tree height with gaussian distribution
+def rand_height(start: int, end: int):
+    mu = 0
+    sigma = abs(end - start) * 0.5     # sigma is the half of range(start, end)
+    g = int(random.gauss(mu, sigma))
+    return start + abs(g)
+
+
 def initial():
     # It is better to have non-uniform random to make the initial() hard to create large size tree !
-    tree_height = random.randint(2,5)
+    tree_height = rand_height(2, 5)
     tree = [binary_operator(), variable_rand(), real_rand()]
 
     for level in range(2, tree_height):
@@ -222,9 +235,8 @@ generation = 5
 population = initial_population(population_size)
 data = []
 
-with open('data/oscillator.json') as data_file:
+with open(file) as data_file:
     data = json.load(data_file)
-
 
 
 best_equation = optimize(data, population_size, generation)

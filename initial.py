@@ -3,6 +3,9 @@
 
 import json
 import random
+import time
+
+random.seed(time.time())  # the random seed is the current system time
 
 
 # randomly generate binary operator

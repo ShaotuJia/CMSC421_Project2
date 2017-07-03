@@ -6,6 +6,7 @@ import json
 import math
 import sys
 
+
 file = sys.argv[1]
 
 try:

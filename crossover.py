@@ -5,6 +5,9 @@
 import json
 import random
 import sys
+import time
+
+random.seed(time.time())  # the random seed is the current system time
 
 try:
     arg_1 = sys.argv[1]
