@@ -63,8 +63,8 @@ def crossover(arg_first:str, arg_second:str):
     new_first = json.loads(new_first)
     new_second = json.loads(new_second)
 
-    print("The first expression changed to =", new_first)
-    print("The second expression changed to =", new_second)
+    print(new_first)
+    print(new_second)
 
 
 crossover(arg_1,arg_2)
