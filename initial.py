@@ -5,32 +5,28 @@ import json
 import random
 import time
 
-random.seed(time.time())  # the random seed is the current system time
+random.seed(time.time())  # The random seed is the current system time
 
 
-# randomly generate binary operator
+# randomly generate binary operation
 def binary_operator() -> object:
     b_list = ["+", "-", "*"]
     b_index = random.randint(0,2)
     return b_list[b_index]
 
 
-# Randomly generate unary operator
-def unary_operator():
-    u_list = ["e", "sin", "cos"]
-    u_index = random.randint(0,2)
-    return u_list[u_index]
-
-
+# randomly generate unary operation
 def variable_rand():
     rand_index = random.randint(0,3)
-    return {0:["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
+    return {0: ["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
 
 
+# Generate random real number from -1000 to 1000
 def real_rand():
     return float("{0:.2f}".format(random.uniform(-1000, 1000)))
 
 
+# Randomly choose a minimum expression or a real number
 def rand_element():
     index = random.randint(0,1)
     if index == 0:
@@ -39,6 +35,7 @@ def rand_element():
         return real_rand()
 
 
+# Generate random expression with uniform tree height
 def initial():
     tree_height = random.randint(2,5)
     tree = [binary_operator(), variable_rand(), real_rand()]

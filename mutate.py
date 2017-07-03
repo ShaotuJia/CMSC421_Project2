@@ -9,8 +9,9 @@ import random
 import sys
 import time
 
-random.seed(time.time())  # the random seed is the current system time
+random.seed(time.time())  # The random seed is the current system time
 
+# Obtain equation in JSON expression from input command line
 try:
     fx = sys.argv[1]
 except:

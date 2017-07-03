@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-# This script is to randomly swap the subtree of two JOSN expression
+# This script is to randomly swap the subtree of two JSON expression
 
 import json
 import random
 import sys
 import time
 
-random.seed(time.time())  # the random seed is the current system time
+random.seed(time.time())  # The random seed is the current system time
 
 try:
     arg_1 = sys.argv[1]
@@ -32,6 +32,7 @@ def left_bracket(aList, Number):
             return left_index
 
 
+# Select subtree from original tree
 def select_subtree(tree, left_index):
 
     truth = False
@@ -49,6 +50,7 @@ def select_subtree(tree, left_index):
     return subtree
 
 
+# Define crossover function
 def crossover(arg_first:str, arg_second:str):
 
     lucky_No_1 = random.randint(1, arg_first.count("["))

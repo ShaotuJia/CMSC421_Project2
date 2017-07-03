@@ -18,33 +18,29 @@ import math
 import time
 import sys
 
-random.seed(time.time())  # the random seed is the current system time
+random.seed(time.time())  # The random seed is the current system time
 file = sys.argv[1]        # Get the location of data file using command
 
 
-# randomly generate binary operator
+# Randomly generate binary operator
 def binary_operator() -> object:
     b_list = ["+", "-", "*"]
     b_index = random.randint(0,2)
     return b_list[b_index]
 
 
-# Randomly generate unary operator
-def unary_operator():
-    u_list = ["e", "sin", "cos"]
-    u_index = random.randint(0,2)
-    return u_list[u_index]
-
-
+# Randomly generate unary operation
 def variable_rand():
     rand_index = random.randint(0,3)
-    return {0:["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
+    return {0: ["e", "x"], 1: ["sin", "x"], 2: ["cos","x"], 3: "x"}[rand_index]
 
 
+# Generate uniform random real number from -1000 to 1000
 def real_rand():
     return float("{0:.2f}".format(random.uniform(-1000, 1000)))
 
 
+# Randomly choose a minimum expression or a real number
 def rand_element():
     index = random.randint(0,1)
     if index == 0:
@@ -60,9 +56,8 @@ def rand_height(start: int, end: int):
     g = int(random.gauss(mu, sigma))
     return start + abs(g)
 
-
+# Generate random expression with gauss random tree height
 def initial():
-    # It is better to have non-uniform random to make the initial() hard to create large size tree !
     tree_height = rand_height(2, 5)
     tree = [binary_operator(), variable_rand(), real_rand()]
 
@@ -130,6 +125,7 @@ def crossover(arg_first: str, arg_second: str):
     return child
 
 
+# Find the minimum unit [] in JSON expression
 def min_unit(string:str):
     bracket_amount = string.count("[")
     for order in range(1, bracket_amount + 1):
@@ -139,20 +135,23 @@ def min_unit(string:str):
             return subtree     # return a string
 
 
-def unary_operation(unit:str, x:int):   # Find the value of unary operation
+# Find the value of unary operation
+def unary_operation(unit:str, x:int):
     return {'["e", "x"]': math.exp(x), '["sin", "x"]':math.sin(x), '["cos", "x"]':math.cos(x)}[unit]
 
 
-def binary_operation(unit:str, x:int):  # Find the value of binary operation
+# Find the value of binary operation
+def binary_operation(unit:str, x:int):
     unit = json.loads(unit)
 
-    for i in range(0, len(unit)):                      #replace x by its value
+    for i in range(0, len(unit)):                      # replace x by its value
         if unit[i] == "x":
             unit[i] = x
     return {"+": unit[1] + unit[2], "-":unit[1] - unit[2], "*":unit[1]*unit[2]}[unit[0]]
 
 
-def equation_value(eq: str, x: int):      # Find the value of equation
+# Find the value of equation
+def equation_value(eq: str, x: int):
 
     result = ""
 
@@ -170,6 +169,7 @@ def equation_value(eq: str, x: int):      # Find the value of equation
     return value
 
 
+# Sum the squared errors between real data and the function
 def sum_error(data:list, function:str):
     error_list = []
     for i in range(0,len(data)):
@@ -214,23 +214,21 @@ def find_parents(data:list, total_pop:list):
     return parents
 
 
+# Find the optimized function for given data
 def optimize(data: list, population_size: int, generation: int):
     group = initial_population(population_size)
     for i in range(0, generation):
         parents = find_parents(data, group)
         child = crossover(parents[0], parents[1])
-        first_size = len(group)
         group.pop(0)
-        before_size = len(group)
         group.append(child)
-        after_size = len(group)
 
     return heurstic(data, group)
 
 
 ################################################################################################
-population_size = 5
-generation = 5
+population_size = 5     # The size of population
+generation = 5          # The number of total generation
 
 population = initial_population(population_size)
 data = []
@@ -241,8 +239,8 @@ with open(file) as data_file:
 
 best_equation = optimize(data, population_size, generation)
 error = sum_error(data, best_equation)
-print("The best equation: ", best_equation)
-print("The sum of square error: ", error)
+print("The best fit equation: ", best_equation)
+print("The sum of squared error: ", error)
 
 
 

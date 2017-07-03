@@ -7,7 +7,7 @@ import math
 import sys
 
 
-file = sys.argv[1]
+file = sys.argv[1]       # Obtain file location from input command line
 
 try:
     json.loads(sys.argv[2])
@@ -32,6 +32,7 @@ def left_bracket(aList, Number):
             return left_index
 
 
+# Select subtree from original tree
 def select_subtree(tree, left_index):
 
     truth = False
@@ -49,6 +50,7 @@ def select_subtree(tree, left_index):
     return subtree
 
 
+# Find the minimum unit [] in JSON expression
 def min_unit(string:str):
     bracket_amount = string.count("[")
     for order in range(1, bracket_amount + 1):
@@ -58,11 +60,13 @@ def min_unit(string:str):
             return subtree     # return a string
 
 
-def unary_operation(unit:str, x:int):   # Find the value of unary operation
+# Find the value of unary operation
+def unary_operation(unit:str, x:int):
     return {'["e", "x"]': math.exp(x), '["sin", "x"]':math.sin(x), '["cos", "x"]':math.cos(x)}[unit]
 
 
-def binary_operation(unit:str, x:int):  # Find the value of binary operation
+# Find the value of binary operation
+def binary_operation(unit:str, x:int):
     unit = json.loads(unit)
 
     for i in range(0, len(unit)):                      #replace x by its value
@@ -71,7 +75,8 @@ def binary_operation(unit:str, x:int):  # Find the value of binary operation
     return {"+": unit[1] + unit[2], "-":unit[1] - unit[2], "*":unit[1]*unit[2]}[unit[0]]
 
 
-def equation_value(eq:str, x:int):      # Find the value of equation
+# Find the value of equation
+def equation_value(eq:str, x:int):
 
     result = ""
 
@@ -88,6 +93,7 @@ def equation_value(eq:str, x:int):      # Find the value of equation
     return float(eq)
 
 
+# Find the optimized function for given data
 def sum_error(data:list, function:str):
     error_list = []
     for i in range(0,len(data)):
