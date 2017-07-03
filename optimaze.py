@@ -10,6 +10,8 @@
 # Step 5: Repeat step 2 to step 4 by 10 times to get 10 generations
 # Step 6: Print the equation after 10 generations
 
+# !! More accurate result can be obtained by increasing the 'size of population' and 'number of generation'!
+
 import json
 import random
 import math
@@ -97,9 +99,11 @@ def select_subtree(tree, left_index):
 
 
 # Define crossover function
-def crossover(arg_first:str, arg_second:str):
+# !!! This crossover function has been changed and is different to the function in 'crossover' file
+def crossover(arg_first: str, arg_second: str):
 
     lucky_No_1 = random.randint(1, arg_first.count("["))
+
     lucky_No_2 = random.randint(1, arg_second.count("["))
 
     which_bracket_first = left_bracket(arg_first, lucky_No_1)
@@ -108,17 +112,9 @@ def crossover(arg_first:str, arg_second:str):
     subtree_first = select_subtree(arg_first, which_bracket_first)
     subtree_second = select_subtree(arg_second, which_bracket_second)
 
-    new_first = arg_first.replace(subtree_first,subtree_second)
-    new_second = arg_second.replace(subtree_second,subtree_first)
+    child = arg_first.replace(subtree_first,subtree_second)
 
-    new_first = json.loads(new_first)
-    new_second = json.loads(new_second)
-
-    children = []
-    children.append(new_first)
-    children.append(new_second)
-
-    return children[0]
+    return child
 
 
 def min_unit(string:str):
@@ -157,7 +153,8 @@ def equation_value(eq: str, x: int):      # Find the value of equation
             result = str(binary_operation(unit,x))
         eq = eq.replace(unit, result)
 
-    return float(eq)
+    value = float(eq)
+    return value
 
 
 def sum_error(data:list, function:str):
@@ -192,31 +189,49 @@ def heurstic(data:list, population: list):
 
 
 # Find parents which are the two equations with smallest error
-def find_parents(data:list, population:list):
+def find_parents(data:list, total_pop:list):
     parents = []
-    parents.append(heurstic(data, population))
-    population.remove(parents[0])
-    parents.append(heurstic(data, population))
+    total = []
+    total.extend(total_pop)
+    first_parent = heurstic(data, total)
+    parents.append(first_parent)
+    total.remove(parents[0])
+    second_parent = heurstic(data, total)
+    parents.append(second_parent)
     return parents
 
 
+def optimize(data: list, population_size: int, generation: int):
+    group = initial_population(population_size)
+    for i in range(0, generation):
+        parents = find_parents(data, group)
+        child = crossover(parents[0], parents[1])
+        first_size = len(group)
+        group.pop(0)
+        before_size = len(group)
+        group.append(child)
+        after_size = len(group)
+
+    return heurstic(data, group)
 
 
 ################################################################################################
-total_size = 10
-population = initial_population(total_size)  # initialize
+population_size = 5
+generation = 5
 
+population = initial_population(population_size)
 data = []
 
 with open('data/oscillator.json') as data_file:
     data = json.load(data_file)
 
-parents = find_parents(data, population)
 
-print(parents[0])
-print(parents[1])
-child = crossover(parents[0],parents[1])
-print(child)
+
+best_equation = optimize(data, population_size, generation)
+error = sum_error(data, best_equation)
+print("The best equation: ", best_equation)
+print("The sum of square error: ", error)
+
 
 
 

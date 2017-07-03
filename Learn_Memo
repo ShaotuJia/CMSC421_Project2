@@ -16,4 +16,20 @@ These "\\" will cause failure when convert to JSON experssion
 warning: Debugger speedups using cython not found. Run '"/usr/bin/python3.4" "/home/shaotu/pycharm-community-2017.1.4/helpers/pydev/setup_cython.py" build_ext --inplace' to build.
 pydev debugger: process 15846 is connecting
 
-reason: debug in the function which is not called  
+reason: debug in the function which is not called 
+
+3. Trick for python '=' in list
+
+a = b; a and b are list.  This means they have same object and also same pointer(!!!point same meomery location!!!)
+
+for example:
+
+input:
+a = [1,2,3,4,5]
+b = a 
+b.pop()
+
+output:
+b = [1,2,3,4]
+a = [1,2,3,4]   !!!!! list a has been changed
+ 
